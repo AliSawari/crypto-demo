@@ -3,7 +3,7 @@ import { CURRENCY_PAIRS } from '@/lib/constants';
 
 const currencies = {}
 CURRENCY_PAIRS.forEach(c => {
-  currencies[c] = 0;
+  currencies[c] = "loading...";
 })
 
 export type WsState = {

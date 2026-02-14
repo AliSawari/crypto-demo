@@ -16,8 +16,8 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
   const { watchlist, addToWatchList, removeFromWatchlist } = watchlistState;
   const { isConnected: isWSConnected, livePrices } = useWSStore(s => s)
 
-
   const isInWatchlist = watchlist.includes(symbol);
+
 
   const addBTN = (
     <button
@@ -66,6 +66,8 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
 
   const latestPrice = useMemo(() => (priceData ? formatPrice(priceData.price) : "--"), [priceData]);
 
+  const switchPrice = livePrices[symbol] === 'loading...' ? latestPrice : formatPrice(livePrices[symbol])
+
   return (
     <div className="space-y-6">
       <section className="overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-emerald-50/70 p-6 shadow-sm">
@@ -92,7 +94,7 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
         </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          <Stat label="Price" value={isWSConnected ? livePrices[symbol] : latestPrice} />
+          <Stat label="Price" value={isWSConnected ? switchPrice : latestPrice} />
           <Stat
             label="Close time"
             value={formatTime(priceData?.closeTime)}

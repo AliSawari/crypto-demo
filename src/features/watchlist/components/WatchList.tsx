@@ -29,10 +29,10 @@ export default function Watchlist({ marketData = [] }: WatchlistProps) {
   }
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white/60 p-4 shadow-sm backdrop-blur">
+    <section className="rounded-xl border border-slate-200 bg-white/60 p-4 shadow-sm backdrop-blur my-4">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">Watchlist</p>
+          <p className="text-2x1 uppercase tracking-wide text-slate-500">Watchlist</p>
         </div>
         <label className="relative">
           <input

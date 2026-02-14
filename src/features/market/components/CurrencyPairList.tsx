@@ -22,11 +22,10 @@ export const CurrencyPairList = ({ pairs }: { pairs: AvgPrice[] }) => {
   }, [pairs, query]);
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white/60 p-4 shadow-sm backdrop-blur">
+    <section className="rounded-xl border border-slate-200 bg-white/60 p-4 shadow-sm backdrop-blur my-4">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">Markets</p>
-          <h2 className="text-lg font-semibold text-slate-900">Currency pairs</h2>
+          <p className="text-lg uppercase tracking-wide text-slate-500">Markets</p>
         </div>
         <div className="flex items-center gap-3">
           <label className="relative">

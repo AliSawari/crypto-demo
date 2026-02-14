@@ -21,8 +21,8 @@ export default function Home() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="container">
-      <div className="contain-content">
+    <div>
+      <div className="mx-4 lg:mx-56">
         <div className="m-5 rounded-3xl text-4xl text-blue-500">Crypto Demo</div>
         <Watchlist marketData={data} />
         <CurrencyPairList pairs={data || []} />
