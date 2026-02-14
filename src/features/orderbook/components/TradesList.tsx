@@ -1,21 +1,10 @@
+import { formatPrice, formatTime } from "@/lib/helpers";
 import { Trade } from "@/types/BinanceRest";
 
 type TradesListProps = {
   trades?: Trade[];
   isLoading: boolean;
 };
-
-const formatNumber = (value: number) =>
-  Number(value).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 8,
-  });
-
-const formatTime = (timestamp: number) =>
-  new Date(timestamp).toLocaleTimeString(undefined, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
 const TradeIcon = ({ isBuyerMaker }: { isBuyerMaker: boolean }) => (
   <span
@@ -79,10 +68,10 @@ export const TradesList = ({ trades, isLoading }: TradesListProps) => {
           </div>
           <div className="text-right">
             <div className="text-sm font-semibold text-slate-900">
-              {formatNumber(trade.price)} / {formatNumber(trade.qty)} qty
+              {formatPrice(trade.price)} / {formatPrice(trade.qty)} qty
             </div>
             <div className="text-xs text-slate-500">
-              Quote: {formatNumber(trade.quoteQty)}
+              Quote: {formatPrice(trade.quoteQty)}
             </div>
           </div>
         </div>

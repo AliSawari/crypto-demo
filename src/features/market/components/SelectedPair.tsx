@@ -14,8 +14,8 @@ import { useWSStore } from "@/store/wsStore";
 export default function SelectedPair({ symbol }: { symbol: string }) {
   const watchlistState = useWatchListStore(s => s);
   const { watchlist, addToWatchList, removeFromWatchlist } = watchlistState;
-    const { isConnected:isWSConnected, livePrices } = useWSStore(s => s)
-  
+  const { isConnected: isWSConnected, livePrices } = useWSStore(s => s)
+
 
   const isInWatchlist = watchlist.includes(symbol);
 
@@ -64,10 +64,7 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
     refetchInterval: 5000
   });
 
-  const latestPrice = useMemo(
-    () => (priceData ? formatPrice(priceData.price) : "--"),
-    [priceData]
-  );
+  const latestPrice = useMemo(() => (priceData ? formatPrice(priceData.price) : "--"), [priceData]);
 
   return (
     <div className="space-y-6">
@@ -202,10 +199,10 @@ const ChartIcon = () => (
 
 const RemoveIcon = () => (
   <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000" className="w-4 text-red-500">
-    
-      <path fill="#000000" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z">
-      </path>
-      <path fill="#000000" d="M512 896a384 384 0 1 0 0-768 384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896 448 448 0 0 1 0 896z">
-      </path>
+
+    <path fill="#000000" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64z">
+    </path>
+    <path fill="#000000" d="M512 896a384 384 0 1 0 0-768 384 384 0 0 0 0 768zm0 64a448 448 0 1 1 0-896 448 448 0 0 1 0 896z">
+    </path>
   </svg>
 )

@@ -1,5 +1,4 @@
-
-export const formatPrice = (price: string) => {
+export const formatPrice = (price: string | number) => {
   const isBig = price.toString().split('.')[0].length >= 4 
   return Number(price).toLocaleString(undefined, {
     minimumFractionDigits: 2,

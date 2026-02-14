@@ -14,6 +14,7 @@ export default function PairDetailsPage() {
       <main className="mx-auto max-w-5xl p-6">
         <p className="rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-800">
           No symbol provided. Please navigate from the markets list.
+          <Link href="/"><span>Go Back To Market</span></Link>
         </p>
       </main>
     );
