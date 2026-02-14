@@ -1,20 +1,26 @@
 'use client';
 
 import SelectedPair from "@/features/market/components/SelectedPair";
+import { CURRENCY_PAIRS } from "@/lib/constants";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+
 
 export default function PairDetailsPage() {
   const params = useParams();
   const slug = params?.slug;
   const symbol = Array.isArray(slug) ? slug[0] : slug;
 
-  if (!symbol) {
+  const isInList = symbol && CURRENCY_PAIRS.includes(symbol.toUpperCase());
+
+  if (!symbol || !isInList) {
     return (
       <main className="mx-auto max-w-5xl p-6">
         <p className="rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-800">
           No symbol provided. Please navigate from the markets list.
-          <Link href="/"><span>Go Back To Market</span></Link>
+          <div className="break-after-all text-blue-300 text-2xl my-4">
+            <Link href="/"><span>Go Back To Market</span></Link>
+          </div>
         </p>
       </main>
     );
