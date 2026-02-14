@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAvgPrice, getTrades } from "@/services/binanceRest";
 import { AvgPrice, Trade } from "@/types/BinanceRest";
@@ -15,8 +15,8 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
   const watchlistState = useWatchListStore(s => s);
   const { watchlist, addToWatchList, removeFromWatchlist } = watchlistState;
   const { isConnected: isWSConnected, livePrices } = useWSStore(s => s)
-
   const isInWatchlist = watchlist.includes(symbol);
+  const [refetchInterval, setRefetchInterval] = useState<any>(null);
 
 
   const addBTN = (
@@ -47,6 +47,7 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
     data: priceData,
     isLoading: isPriceLoading,
     error: priceError,
+    refetch: priceRefetch
   } = useQuery<AvgPrice>({
     queryKey: ["avg-price", symbol],
     queryFn: () => getAvgPrice(symbol),
@@ -63,6 +64,19 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
     enabled: Boolean(symbol),
     refetchInterval: 5000
   });
+
+  useEffect(() => {
+    if (isWSConnected) {
+      clearInterval(refetchInterval)
+      setRefetchInterval(null);
+    } else {
+      if (!refetchInterval) {
+        const interval = setInterval(() => priceRefetch(), 5000)
+        setRefetchInterval(interval);
+      }
+    }
+  }, [isWSConnected])
+
 
   const latestPrice = useMemo(() => (priceData ? formatPrice(priceData.price) : "--"), [priceData]);
 

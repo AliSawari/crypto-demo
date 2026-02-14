@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { binanceSocketManager } from "@/services/binanceSocket"
 import { CURRENCY_PAIRS } from "@/lib/constants"
 import { WS_Event } from "@/types/BinanceWS";
+import { Statusbar } from "@/features/statusbar/components/Statusbar";
 
 
 const queryClient = new QueryClient({
@@ -69,5 +70,6 @@ export const ClientLayout = ({ children }: { children: React.ReactNode }) => {
 
   return <QueryClientProvider client={queryClient}>
     {children}
+    <Statusbar />
   </QueryClientProvider>;
 };

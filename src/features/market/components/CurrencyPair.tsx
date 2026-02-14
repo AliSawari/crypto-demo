@@ -37,7 +37,7 @@ export const CurrencyPair = ({ pair }: { pair: AvgPrice }) => {
           </div>
         </Link>
         <div className="text-xs text-slate-500">
-          {mins ? `${mins} min window` : "Avg price"}
+          {mins ? `${mins} min` : "Avg price"}
         </div>
         {
           isInWatchList(symbol) ? removeFrombtn : addToBtn
