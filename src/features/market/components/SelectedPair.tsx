@@ -8,6 +8,7 @@ import { Trades } from "@/features/orderbook/components/Trades";
 import { formatPrice, formatTime } from "@/lib/helpers";
 import { useConnectionStore, useWatchListStore } from '@/store/uiStore';
 import { useWSStore } from "@/store/wsStore";
+import { DynamicLogo } from "./DynamicLogo";
 
 
 
@@ -91,7 +92,8 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
             <p className="text-xs uppercase tracking-wide text-slate-500">
               Selected pair
             </p>
-            <div className="flex items-baseline gap-3">
+            <div className="flex items-baseline gap-3 my-4 ">
+              <DynamicLogo w={30} h={30} s={symbol} />
               <h1 className="text-2xl font-semibold text-slate-900">
                 {symbol}
               </h1>
@@ -152,13 +154,13 @@ const Stat = ({
   value,
   helper,
 }: {
-  label: string;
-  value: string;
+  label: string | number;
+  value: string | number;
   helper?: string;
 }) => (
   <div className="rounded-xl border border-slate-200 bg-white/70 p-4 shadow-sm">
     <p className="text-xs uppercase tracking-wide text-slate-500">{label}</p>
-    <p className="mt-1 text-xl font-semibold text-slate-900">{value}</p>
+    <p className="mt-1 text-2xl font-semibold text-slate-900">{value}</p>
     {helper && <p className="mt-1 text-xs text-slate-500">{helper}</p>}
   </div>
 );

@@ -1,9 +1,12 @@
 import { formatPrice, formatTime } from "@/lib/helpers";
 import { AvgPrice } from "@/types/BinanceRest";
 import Link from "next/link";
+import Image from 'next/image'
 import { useWatchListStore } from '@/store/uiStore';
 import { useWSStore } from '@/store/wsStore';
 import { useEffect } from "react";
+import { DynamicLogo } from "./DynamicLogo";
+
 
 export const CurrencyPair = ({ pair }: { pair: AvgPrice }) => {
   const { symbol, price, mins, closeTime } = pair;
@@ -22,7 +25,7 @@ export const CurrencyPair = ({ pair }: { pair: AvgPrice }) => {
 
   const getLatestPrice = () => {
     if (isWSConnected) {
-      const live:any = formatPrice(livePrices[symbol]);
+      const live: any = formatPrice(livePrices[symbol]);
       if (live && !isNaN(live)) return live;
     }
     return formatPrice(price);
@@ -32,8 +35,11 @@ export const CurrencyPair = ({ pair }: { pair: AvgPrice }) => {
     <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow">
       <div className="flex items-start justify-between">
         <Link href={`/pair/${symbol}`}>
-          <div className="text-sm font-semibold text-slate-900 cursor-pointer hover:underline ">
-            {symbol ?? "Unknown symbol"}
+          <div className="flex">
+            <DynamicLogo s={symbol} />
+            <div className="ml-2 text-sm font-semibold text-slate-900 cursor-pointer hover:underline ">
+              {symbol ?? "Unknown symbol"}
+            </div>
           </div>
         </Link>
         <div className="text-xs text-slate-500">
@@ -107,3 +113,4 @@ const RemoveIcon = () => (
     </path>
   </svg>
 )
+

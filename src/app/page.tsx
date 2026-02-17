@@ -46,7 +46,7 @@ export default function Home() {
 
   return (
     <div>
-      <div className="mx-4 lg:mx-56">
+      <div className="mx-4 lg:mx-52">
         <div className="m-5 rounded-3xl text-4xl text-blue-500">Crypto Market Watch Demo</div>
         { error ? <div className="font-mono text-red-500 italic">Error Connecting to Binance...</div>: "" }
         <Watchlist marketData={data} />
