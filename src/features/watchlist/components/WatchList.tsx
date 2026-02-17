@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { CurrencyPair } from '@/features/market/components/CurrencyPair';
 import { useWatchListStore } from '@/store/uiStore';
 import { AvgPrice } from '@/types/BinanceRest';
+import { useDebounce } from 'use-debounce';
 
 type WatchlistProps = {
   marketData?: AvgPrice[];
@@ -11,14 +12,15 @@ type WatchlistProps = {
 
 export default function Watchlist({ marketData = [] }: WatchlistProps) {
   const [query, setQuery] = useState('');
+  const [debounceQuery] = useDebounce(query, 500);
   const watchlist = useWatchListStore((s) => s.watchlist) ?? [];
   const pairs = marketData.filter((x) => watchlist.includes(x.symbol));
 
   const filteredPairs = useMemo(() => {
-    const term = query.trim().toLowerCase();
+    const term = debounceQuery.trim().toLowerCase();
     if (!term) return pairs;
     return pairs.filter((pair) => pair.symbol?.toLowerCase().includes(term));
-  }, [pairs, query]);
+  }, [pairs, debounceQuery]);
 
   if (!watchlist?.length) {
     return (

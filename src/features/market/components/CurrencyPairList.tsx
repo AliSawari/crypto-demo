@@ -1,8 +1,13 @@
 import { useMemo, useState } from "react";
 import { CurrencyPair } from "./CurrencyPair";
 import { AvgPrice } from "@/types/BinanceRest";
+import { useDebounce } from 'use-debounce'
 
 export const CurrencyPairList = ({ pairs }: { pairs: AvgPrice[] }) => {
+  const [query, setQuery] = useState("");
+  const [debounceQuery] = useDebounce(query, 500);
+
+
   if (!pairs?.length) {
     return (
       <section className="rounded-xl border border-slate-200 bg-white/60 p-4 text-sm text-slate-600 shadow-sm backdrop-blur">
@@ -10,16 +15,15 @@ export const CurrencyPairList = ({ pairs }: { pairs: AvgPrice[] }) => {
       </section>
     );
   }
-
-  const [query, setQuery] = useState("");
+  
 
   const filteredPairs = useMemo(() => {
-    const term = query.trim().toLowerCase();
+    const term = debounceQuery.trim().toLowerCase();
     if (!term) return pairs;
     return pairs.filter((pair) =>
       pair.symbol?.toLowerCase().includes(term)
     );
-  }, [pairs, query]);
+  }, [pairs, debounceQuery]);
 
   return (
     <section className="rounded-xl border border-slate-200 bg-white/60 p-4 shadow-sm backdrop-blur my-4">
