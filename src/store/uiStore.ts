@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
-type WatchlistState = {
+export type WatchlistState = {
   watchlist: string[] | undefined,
-  addToWatchList: (pair:string) => void,
+  addToWatchList: (pair: string) => void,
   removeFromWatchlist: (pair: string) => void,
   setWatchlist: (w: string[]) => void,
   empteyWatchlist: () => void
@@ -27,4 +27,16 @@ export const useWatchListStore = create<WatchlistState>((set) => ({
   empteyWatchlist: () => set(state => {
     return { watchlist: [] }
   }),
-}))
+}));
+
+export type ConnnectionStore = {
+  connected: Boolean,
+  setConnected: (c: Boolean) => void
+}
+
+export const useConnectionStore = create<ConnnectionStore>((set) => ({
+  connected: false,
+  setConnected: (c: Boolean) => set(() => {
+    return { connected: c }
+  }),
+}));

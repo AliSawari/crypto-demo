@@ -1,21 +1,44 @@
 "use client";
 
+import { useConnectionStore } from "@/store/uiStore";
 import { useWSStore } from "@/store/wsStore";
+import { useEffect, useState } from "react";
 
 export const Statusbar = () => {
-  const isConnected = useWSStore((s) => s.isConnected);
+  const isWSConnected = useWSStore((s) => s.isConnected);
+  const isConnected = useConnectionStore(s => s.connected);
+  const [status, setStatus] = useState({
+    label: "Disconnected!",
+    helper: "No Connection With Binance Server!",
+    dotClass: "bg-red-500",
+  })
 
-  const status = isConnected
-    ? {
-        label: "WebSocket connected",
-        helper: "Live prices streaming",
-        dotClass: "bg-emerald-500",
+
+  useEffect(() => {
+    if (isConnected) {
+      if (isWSConnected) {
+        setStatus({
+          label: "WebSocket connected",
+          helper: "Live prices streaming",
+          dotClass: "bg-emerald-500",
+        })
+      } else {
+        setStatus({
+          label: "WebSocket disconnected",
+          helper: "Using REST (every 5 seconds)",
+          dotClass: "bg-amber-500",
+        })
+
       }
-    : {
-        label: "WebSocket disconnected",
-        helper: "Using REST (every 5 seconds)",
-        dotClass: "bg-amber-500",
-      };
+    } else {
+      setStatus({
+        label: "Disconnected!",
+        helper: "No Connection With Binance Server!",
+        dotClass: "bg-red-500",
+      })
+    }
+
+  }, [isWSConnected, isConnected])
 
   return (
     <div className="fixed inset-x-0 bottom-4 z-40 flex justify-center pointer-events-none">

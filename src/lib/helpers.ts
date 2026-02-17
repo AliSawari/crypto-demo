@@ -1,5 +1,6 @@
 export const formatPrice = (price: string | number) => {
-  const isBig = price.toString().split('.')[0].length >= 4 
+  const isBig = price.toString().split('.')[0].length >= 4
+  if (/[a-zA-Z]/gi.test(price as string)) return price;
   return Number(price).toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: isBig ? 2 : 6,

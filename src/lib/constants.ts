@@ -15,3 +15,16 @@ export const CURRENCY_PAIRS = [
   "LINKUSDT",
   "BCHUSDT",
 ];
+
+const INITIAL_DATA = [];
+
+for (let c of CURRENCY_PAIRS) {
+  let o = {
+    mins: "-",
+    price: "Loading...",
+    symbol: c
+  }
+  INITIAL_DATA.push(o)
+}
+
+export { INITIAL_DATA } 

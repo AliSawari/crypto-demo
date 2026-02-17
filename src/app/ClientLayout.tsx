@@ -1,5 +1,5 @@
 'use client';
-import { useWatchListStore } from "@/store/uiStore";
+import { useWatchListStore, useConnectionStore } from "@/store/uiStore";
 import { useWSStore } from "@/store/wsStore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -7,7 +7,7 @@ import { binanceSocketManager } from "@/services/binanceSocket"
 import { CURRENCY_PAIRS } from "@/lib/constants"
 import { WS_Event } from "@/types/BinanceWS";
 import { Statusbar } from "@/features/statusbar/components/Statusbar";
-
+import { ping } from "@/services/binanceRest";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,9 +17,13 @@ const queryClient = new QueryClient({
   }
 });
 
+
+
 export const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   const setWatchlist = useWatchListStore((s) => s.setWatchlist);
   const wsStore = useWSStore(s => s);
+  const connectionState = useConnectionStore(s => s);
+
 
   useEffect(() => {
     const parseLocalStorage = () => {
@@ -33,6 +37,9 @@ export const ClientLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     console.log('init');
+
+    ping().then(res => connectionState.setConnected(res)).catch(e => console.log(e))
+
     const binanceParams = CURRENCY_PAIRS.map(c => {
       return `${c.toLowerCase()}@avgPrice`;
     })

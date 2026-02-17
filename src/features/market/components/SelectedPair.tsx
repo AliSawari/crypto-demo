@@ -6,7 +6,7 @@ import { getAvgPrice, getTrades } from "@/services/binanceRest";
 import { AvgPrice, Trade } from "@/types/BinanceRest";
 import { Trades } from "@/features/orderbook/components/Trades";
 import { formatPrice, formatTime } from "@/lib/helpers";
-import { useWatchListStore } from '@/store/uiStore';
+import { useConnectionStore, useWatchListStore } from '@/store/uiStore';
 import { useWSStore } from "@/store/wsStore";
 
 
@@ -17,6 +17,7 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
   const { isConnected: isWSConnected, livePrices } = useWSStore(s => s)
   const isInWatchlist = watchlist.includes(symbol);
   const [refetchInterval, setRefetchInterval] = useState<any>(null);
+   const connectionState = useConnectionStore(s => s);
 
 
   const addBTN = (
@@ -70,12 +71,12 @@ export default function SelectedPair({ symbol }: { symbol: string }) {
       clearInterval(refetchInterval)
       setRefetchInterval(null);
     } else {
-      if (!refetchInterval) {
+      if (!refetchInterval && connectionState.connected) {
         const interval = setInterval(() => priceRefetch(), 5000)
         setRefetchInterval(interval);
       }
     }
-  }, [isWSConnected])
+  }, [isWSConnected, connectionState.connected])
 
 
   const latestPrice = useMemo(() => (priceData ? formatPrice(priceData.price) : "--"), [priceData]);
