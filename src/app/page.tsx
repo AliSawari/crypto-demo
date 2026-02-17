@@ -15,7 +15,7 @@ export default function Home() {
   const { isConnected: isWSConnected } = useWSStore(s => s);
   const connectionState = useConnectionStore(s => s);
 
-  const { data, error, refetch: priceRefetch } = useQuery<AvgPrice[]>({
+  const { data, error, refetch: priceRefetch, isLoading } = useQuery<AvgPrice[]>({
     queryKey: ["currency-pairs"],
     queryFn: () => getBatchAvgPrice(CURRENCY_PAIRS),
     initialData: INITIAL_DATA,
@@ -42,7 +42,7 @@ export default function Home() {
 
 
 
-  // if (isLoading) return <div className="text-4xl text-center m-auto font-mono mt-12 text-slate-700">Loading...</div>;
+  if (isLoading) return <div className="text-4xl text-center m-auto font-mono mt-12 text-slate-700">Loading...</div>;
 
   return (
     <div>
